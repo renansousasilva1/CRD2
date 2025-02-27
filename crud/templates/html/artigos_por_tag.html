@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigos da Tag: {{ tag.nome }}</title>
+</head>
+<body>
+    <h1>Artigos com a Tag: "{{ tag.nome }}"</h1>
+    {% if artigos %}
+        <ul>
+            {% for artigo in artigos %}
+                <li>
+                    <h2><a href="{% url 'artigo_detail' artigo.id %}">{{ artigo.titulo }}</a></h2>
+                    <p>{{ artigo.previo }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há artigos associados a esta tag.</p>
+    {% endif %}
+</body>
+</html>

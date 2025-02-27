@@ -1,0 +1,119 @@
+{% extends 'html/base1.html' %}
+{% load static %}
+
+
+{% block title %}Notícias - PistaNews{% endblock %}
+
+{% block content %}
+
+
+<!-- Otimização para mecanismos de pesquisa pelo Rank Math - https://rankmath.com/ -->
+<title>Mapa das Facções e Áreas de Risco do Rio de Janeiro - Crimes News</title>
+     
+<style id="wp-custom-css">
+
+.com {    width: 200px;
+    background:#000;
+    color: #fff;
+    padding: 4px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 15px 0px;
+    margin: auto;
+    margin-top: -53px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 999;}
+.com1 {    width: 40px;
+    background:#000;
+    color: #fff;
+    padding: 4px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 15px 0px;
+    margin-top: 15px;
+    position: absolute;
+    right: 10px;
+    z-index: 999;}/* GeneratePress Site CSS */ .auto-width.gb-query-loop-wrapper {
+    flex: 1;
+}
+
+</style>
+
+<div class="container">
+<h1 style="color:white;">Mapa das Facções do Rio de Janeiro</h1>
+<p style="color:white;">Compreenda o Mapa do Rio de Janeiro de forma interativa.</p>
+</div>
+
+
+<div class="com1"><img style="height:30px; width:30px;" src="{% static 'LOGO_PM.png' %}" alt="Logo"></div>
+<div class="mp"><iframe id="cn21" src=""></iframe></div>
+<div class="com">PistaNews BR | Google Maps</div>
+ 
+<script>
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+</script>
+
+<script>
+
+var iframe = document.querySelector('#cn21');
+iframe.setAttribute('src', 'https://ppn2777.github.io/m2/m3.html');
+iframe.style.width = '100%'; // Define a largura como 100%
+iframe.style.height = '600px'; // Define a altura como 600 pixels
+
+</script>
+
+<script>
+document.addEventListener("keydown", function(event) {
+  if (event.ctrlKey && event.key === "u") {
+    event.preventDefault(); // Impede que a ação padrão seja executada
+    
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+    if (event.ctrlKey && event.key === "c") {
+      event.preventDefault(); // Impede que a ação CTRL + C  seja executada
+      alert("Proibido copiar esta porra, aí doidão! Ta dando de maluco porra")
+    }
+  });
+
+
+</script>
+
+<script>
+  document.addEventListener("contextmenu", function(event) {
+    event.preventDefault(); // Impede o menu de contexto de ser exibido
+  });
+</script>
+<script>
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
+      event.preventDefault(); // Impede a ação padrão de abrir a ferramenta de inspeção
+      alert("Comando desativado!");
+    }
+  });
+</script>
+<script>
+  document.addEventListener("keydown", function(event) {
+    if (event.ctrlKey && event.shiftKey && event.key === "I") {
+      event.preventDefault(); // Impede a ação padrão de abrir a ferramenta de desenvolvedor
+      alert("Comando desativado!");
+    }
+  });
+</script>
+
+<script>
+  console.log("%cAtenção!", "font-size: 48px; color: red;");
+  console.log("%cEsta é uma área perigosa! Você corre uma séria chance de ter seu aparelho desconfigurado ao tentar acessar esta área", "font-size: 24px;");
+  console.log("%cSe você não tem permissão para acessar, por favor, saia imediatamente.", "font-size: 18px;");
+</script>
+
+			
+</body>
+</html>
+
+{% endblock %}

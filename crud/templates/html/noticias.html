@@ -1,0 +1,106 @@
+{% extends 'html/base1.html' %}
+
+{% block title %}Notícias - PistaNews{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="container my-4">
+    <h1 class="text-center" style="font-family: 'Open Sans', sans-serif; font-weight: 800; color:#fff;">NOTÍCIAS</h1>
+    <div class="row mt-4">
+        {% if noticias %}
+            {% for noticia in noticias %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if noticia.imagem and noticia.imagem.url %}
+                    <a href="{% url 'noticia_detail' noticia.id %}" class="btn btn-primary btn-sm" style="background-color:transparent; border: none;">
+                        <img src="{{ noticia.imagem.url }}" class="card-img-top" alt="Imagem da notícia" style="height: 210px; object-fit: cover;">
+                    </a>
+                    {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center text-white" style="height: 200px;">
+                        <span>Sem imagem disponível</span>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ noticia.titulo }}</h5>
+                        <p class="card-text">{{ noticia.previo }}</p>
+                    </div>
+                    <div class="card-footer text-end">
+                        <a href="{% url 'noticia_detail' noticia.id %}" class="btn btn-primary btn-sm">Leia mais</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Poxa! Nada foi encontrado</p>
+        {% endif %}
+    </div>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">‹ Anterior</a>
+                </li>
+            {% else %}
+                
+                <li class="page-item disabled">
+                    <span class="page-link">‹ Anterior</span>
+                </li>
+            {% endif %}
+    
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% elif num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+    
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima ›</a>
+                </li>
+                
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Próxima ›</span>
+                </li>
+                
+            {% endif %}
+        </ul>
+    </nav>
+    
+    
+
+
+
+    <style>
+        
+        
+        .card-img, .card-img-bottom, .card-img-top {
+            width: 104.5%;
+            margin-left:-9px;
+            margin-top:-5px;
+        }
+
+        @media (max-width: 768px) {
+        
+        .card-img, .card-img-bottom, .card-img-top{
+            width: 103.5%;
+            margin-left: -8px;
+            margin-top:-3px;
+        }
+    }
+    </style>
+
+    {% endblock %}
+    

@@ -1,0 +1,352 @@
+
+<html lang="pt-BR">
+    <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornal Moderno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        /* Reset básico para remover margens e preenchimentos padrões */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo e fonte padrão */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #e84e1b;
+        }
+
+        /* Layout da página */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px;
+        }
+
+        .highlighted-news {
+            flex: 1 1 50%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .highlighted-news img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .highlighted-news h2 {
+            font-size: 28px;
+            padding: 20px;
+            background-color: #e84e1b;
+            color: white;
+        }
+
+        .highlighted-news p {
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .categories {
+            flex: 1 1 25%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .categories h3 {
+            margin-bottom: 15px;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .categories ul {
+            list-style: none;
+        }
+
+        .categories li {
+            margin-bottom: 10px;
+        }
+
+        .categories a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .categories a:hover {
+            color: #e84e1b;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .highlighted-news {
+                flex: 1 1 100%;
+            }
+
+            .categories {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="--bs-bg-opacity: 1;
+    background-color: rgb(51 51 51) !important;">
+            <div class="container-fluid">
+                <!-- Nome do Jornal -->
+                <a class="navbar-brand" href="#" style="font-size:10px; margin-right:content-fit;background-color:#fff;">JORNAL MODERNO</a>
+    
+                <!-- Botão para versão mobile -->
+                <button 
+                    class="navbar-toggler" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <!-- Conteúdo da Nav-Bar -->
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Menu de Navegação -->
+                
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="position:left; ">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'noticias' %}">Notícias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'artigos' %}">Artigos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'ferramentas' %}">Ferramentas</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register/' %}">Cadastrar conta</a>
+                        </li>
+                        {%endif%}
+                    </ul>
+                
+    
+                    <!-- Formulário de Busca -->
+                    <form method="GET" action="{% url 'noticias' %}" class="d-flex" style="position-right:80px;">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            class="form-control me-2" 
+                            placeholder="Buscar notícia..." 
+                            aria-label="Buscar notícia" 
+                            value="{{ search|default:'' }}">
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="bi bi-search"></i> <!-- Ícone de lupa -->
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Link para Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</nav>
+
+<style> <!-- Para telas menores que 1366 e maiores do que  992-->
+    @media (max-width: 1366px;) 
+        .navbar-brand {
+            margin-left:80px;
+        }
+</style>
+
+<style>
+
+    /* Media Query para dispositivos menores (telas abaixo de 768px) */
+@media (max-width: 768px) {
+    .navbar-brand {
+        margin-left:5px;
+    }
+
+    form.d-flex{
+
+    }
+
+    li.nav-link{
+        margin-right:center;
+    }
+
+    .nav_ul{
+        position:center;
+        color:green;
+    }
+
+    a.navbar-brand{}
+    
+    div#navbarNav.navbar-collapse.collapse.show{
+        align:center;
+
+    }
+    .navbar-nav {
+        margin-left: 0; /* Remover espaçamento lateral no menu */
+        text-align: center; /* Centralizar os itens do menu */
+    }
+
+    .navbar-nav .nav-link {
+        padding: 8px 0; /* Ajustar espaçamento vertical entre os links */
+    }
+
+    .form-control {
+        width: 100%; /* Expandir o campo de busca */
+        margin-bottom: 10px; /* Adicionar espaço abaixo do campo de busca */
+    }
+
+    .d-flex {
+        flex-direction: column; /* Colocar o formulário e botão em coluna */
+        align-items: stretch; /* Expandir para preencher o espaço */
+        margin-right: 0; /* Remover margem direita */
+    }
+
+    .btn-outline-primary {
+        width: 100%; /* Botão de busca ocupa 100% da largura */
+    }
+}
+</style>
+        
+
+
+<style>
+    .highlighted-news {
+        flex: 1 1 50%;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .highlighted-news img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .highlighted-news h2 {
+        font-size: 28px;
+        padding: 20px;
+        background-color: #e84e1b;
+        color: white;
+    }
+
+    .highlighted-news p {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .main-content {
+            flex-direction: column;
+            margin: 20px;
+        }
+
+        .highlighted-news {
+            flex: 1 1 100%;
+        }
+
+        .categories {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+
+<div class="login">
+    <form method ="POST">
+        {% csrf_token %}
+        
+        <table>
+            {{login_form.errors}}
+            {{login_form.as_table}}
+        </table>
+
+    <input type="submit" value="Logar">
+
+    </form>
+</div>
+

@@ -1,0 +1,140 @@
+{% extends 'html/base1.html' %}
+
+{% block title %}Notícias - PistaNews{% endblock %}
+
+
+
+{% block content%}
+
+    <body style="background-color:#2d2b2c;">
+
+        <!-- Adicione isso no <head> ou onde carregar os estilos -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        </li>
+
+        <div class="container my-4" style=" border-radius:10px;">
+            <h1 class="text-center" style="font-family: 'Open Sans', sans-serif; font-weight: 800; color:white; position:left;">ARTIGOS</h1>
+            <div class="row mt-4">
+                {% for artigo in artigos %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if artigo.imagem %}
+                        <style>
+                            .card-img-top {
+                                width: 295px;
+                                height: 200px;
+                                object-fit: cover;
+                                margin-left: -1px;
+                            }
+
+                            /* Media query para telas maiores */
+                        @media (max-width: 768px) {
+                            .card-img-top {
+                                width: 335px; /* Define a largura como 400px em telas maiores */
+                            }
+                        }
+                        </style>
+                        <img src="{{ artigo.imagem.url }}" class="card-img-top" alt="Imagem da notícia" >
+                        {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center text-white" style="width: 295px;height: 200px;object-fit: cover;margin-left: -1px;">
+                            <span>Sem imagem disponível</span>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ artigo.titulo }}</h5>
+                            <p class="card-text">{{ artigo.previo }}</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a href="{% url 'artigo_detail' artigo.id %}" class="btn btn-primary btn-sm">Leia mais</a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% if artigos %}
+                    <p></p>
+                {% else %}
+                    <p>Poxa! Nada foi encontrado</p>
+                {% endif %}
+            </div>
+    
+            <!-- Pagination -->
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link" aria-label="Anterior">
+                <span aria-hidden="true">&laquo;</span>
+            </span>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Próximo">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link" aria-label="Próximo">
+                <span aria-hidden="true">&raquo;</span>
+            </span>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+        </div>
+
+        <style>
+            .custom-page-link {
+                color: #6c757d;
+                background-color: #f8f9fa;
+                border: none;
+                border-radius: 50px;
+                padding: 6px 10px; /* Menor padding, para diminuir a altura e largura do botão */
+                transition: all 0.3s ease-in-out;
+            }
+            
+            .custom-page-link:hover {
+                background-color: #007bff;
+                color: white;
+                transform: scale(1.1);
+            }
+            
+            .active-page {
+                background-color: #007bff;
+                color: white;
+                font-weight: bold;
+                box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.6);
+            }
+            
+            .page-item.disabled .custom-page-link {
+                background-color: #e9ecef;
+                color: #adb5bd;
+            }
+            
+            .page-item .custom-page-link i {
+                font-size: 14px;
+            }
+            
+        </style>
+    </body>
+
+{%endblock%}
